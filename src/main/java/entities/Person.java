@@ -1,16 +1,20 @@
 package entities;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "person")
-public class Person {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class Person implements Serializable{
+
+    private static final long serialVersionUID = 1L;
     @Id
-    @Column(name = "user_name")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JoinColumn(name = "user_name")
+    @OneToOne(cascade = CascadeType.PERSIST)
     private String userName;
     @Basic
     @Column(name = "Address")
@@ -50,6 +54,14 @@ public class Person {
     public Person() {
     }
 
+    public Person(String userName, String address, String phone, String email, String birthYear, String gender){
+        this.userName = userName;
+        this.address = address;
+        this.phone = phone;
+        this.email = email;
+        this.birthYear = birthYear;
+        this.gender = gender;
+    }
 
 
     public String getUserName() {

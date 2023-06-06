@@ -1,13 +1,16 @@
 package entities;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Table(name = "guide")
-public class Guide {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class Guide implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @javax.persistence.Column(name = "Name")
     private String name;
     @Basic
