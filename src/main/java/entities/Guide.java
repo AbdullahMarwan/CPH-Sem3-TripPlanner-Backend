@@ -1,11 +1,14 @@
 package entities;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name = "guide")
-public class Guide {
+public class Guide implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -16,7 +19,11 @@ public class Guide {
     private String profile;
     private String imageUrl;
 
+    @OneToMany(mappedBy = "guide", cascade = CascadeType.PERSIST)
+    private List<Trip> trips;
 
+    public Guide() {
+    }
 
     public Guide(String name, String gender, String birthyear, String profile, String imageUrl) {
         this.name = name;
@@ -27,10 +34,6 @@ public class Guide {
         //TODO: Add Date object
         // this.date = new Date()
 
-    }
-
-
-    public Guide() {
     }
 
     public Long getId() {
@@ -80,6 +83,16 @@ public class Guide {
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
+
+    public List<Trip> getTrips() {
+        return trips;
+    }
+
+    public void addTrip(Trip trip) {
+        this.trips.add(trip);
+    }
+
+
 
 
 }

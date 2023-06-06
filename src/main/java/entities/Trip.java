@@ -9,7 +9,7 @@ import java.util.List;
 public class Trip {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "trip_id", nullable = false)
     private Long id;
     private String name;
     //    @Temporal(TemporalType.DATE)
@@ -20,7 +20,30 @@ public class Trip {
     private String duration;
     private String packinglist;
 
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    private Guide guide;
+    private Long guideId = guide.getId();
 
+    @JoinTable(name = "trip_user", joinColumns = {
+            @JoinColumn(name = "trip_id", referencedColumnName = "id")}, inverseJoinColumns = {
+            @JoinColumn(name = "user_name", referencedColumnName = "user_name"),
+            @JoinColumn(name = "guide_id", referencedColumnName = "GUIDE_id")})
+
+    @ManyToMany
+    private List<User> userList = new ArrayList<>();
+
+    public List<String> usersOnTrip() {
+        if(userList.isEmpty()) {
+            return null;
+        }
+        List<String> usersByName = new ArrayList<>();
+        userList.forEach((user) -> {
+            usersByName.add(user.getUserName());
+        });
+        return usersByName;
+    }
+    public Trip() {
+    }
 
     public Trip(String name, String date, String time, String location, String duration, String packinglist) {
         this.name = name;
@@ -31,13 +54,9 @@ public class Trip {
         this.packinglist = packinglist;
     }
 
-    public Trip() {
-    }
-
     public Long getId() {
         return id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -45,7 +64,6 @@ public class Trip {
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -53,7 +71,6 @@ public class Trip {
     public String getDate() {
         return date;
     }
-
     public void setDate(String date) {
         this.date = date;
     }
@@ -61,7 +78,6 @@ public class Trip {
     public String getTime() {
         return time;
     }
-
     public void setTime(String time) {
         this.time = time;
     }
@@ -69,7 +85,6 @@ public class Trip {
     public String getLocation() {
         return location;
     }
-
     public void setLocation(String location) {
         this.location = location;
     }
@@ -77,7 +92,6 @@ public class Trip {
     public String getDuration() {
         return duration;
     }
-
     public void setDuration(String duration) {
         this.duration = duration;
     }
@@ -85,9 +99,25 @@ public class Trip {
     public String getPackinglist() {
         return packinglist;
     }
-
     public void setPackinglist(String packinglist) {
         this.packinglist = packinglist;
+    }
+
+    public Guide getGuide() {
+        return guide;
+    }
+    public void addGuide(Long guideid) {
+        this.guide.getId();
+    }
+
+    public List<User> getUsers() {
+        return userList;
+    }
+    public void setUserList(List<User> userList) {
+        this.userList = userList;
+    }
+    public void addUser(User user) {
+        this.userList.add(user);
     }
 
 

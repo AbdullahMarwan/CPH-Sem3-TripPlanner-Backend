@@ -30,10 +30,16 @@ public class User implements Serializable {
   @Size(min = 1, max = 255)
   @Column(name = "user_pass")
   private String userPass;
+  private String address;
+  private String phone;
+  private String email;
+  private String birthyear;
+  private String gender;
 
   @JoinTable(name = "user_roles", joinColumns = {
     @JoinColumn(name = "user_name", referencedColumnName = "user_name")}, inverseJoinColumns = {
     @JoinColumn(name = "role_name", referencedColumnName = "role_name")})
+
   @ManyToMany
   private List<Role> roleList = new ArrayList<>();
 
@@ -60,11 +66,19 @@ public class User implements Serializable {
     this.userPass = BCrypt.hashpw(userPass, BCrypt.gensalt());
   }
 
+  public User(String userName, String userPass, String address, String phone, String email, String birthyear, String gender) {
+    this.userName = userName;
+    this.userPass = BCrypt.hashpw(userPass, BCrypt.gensalt());
+    this.address = address;
+    this.phone = phone;
+    this.email = email;
+    this.birthyear = birthyear;
+    this.gender = gender;
+  }
 
   public String getUserName() {
     return userName;
   }
-
   public void setUserName(String userName) {
     this.userName = userName;
   }
@@ -72,15 +86,48 @@ public class User implements Serializable {
   public String getUserPass() {
     return this.userPass;
   }
-
   public void setUserPass(String userPass) {
     this.userPass = BCrypt.hashpw(userPass, BCrypt.gensalt());;
+  }
+
+  public String getAddress() {
+    return address;
+  }
+  public void setAddress(String address) {
+    this.address = address;
+  }
+
+  public String getPhone() {
+    return phone;
+  }
+  public void setPhone(String phone) {
+    this.phone = phone;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public String getBirthyear() {
+    return birthyear;
+  }
+  public void setBirthyear(String birthyear) {
+    this.birthyear = birthyear;
+  }
+
+  public String getGender() {
+    return gender;
+  }
+  public void setGender(String gender) {
+    this.gender = gender;
   }
 
   public List<Role> getRoleList() {
     return roleList;
   }
-
   public void setRoleList(List<Role> roleList) {
     this.roleList = roleList;
   }

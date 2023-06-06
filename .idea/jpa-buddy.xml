@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="JpaBuddyIdeaProjectConfig">
+  <component name="JpaBuddyIdeaProjectConfig" migrateIndexesAndConstraints="true" reUseTableSchema="true">
     <option name="defaultUnitInitialized" value="true" />
     <option name="renamerInitialized" value="true" />
+    <option name="reverseEngineeringLastDbConnectionId" value="997169f2-7c26-4b38-b7f9-f6fde70d1bcb" />
+    <option name="reLastEntityCreationPackage" value="src/main/java/entities" />
+    <option name="newEntityIdType" value="Long" />
+    <option name="newEntityIdStrategy" value="Identity" />
   </component>
 </project>
