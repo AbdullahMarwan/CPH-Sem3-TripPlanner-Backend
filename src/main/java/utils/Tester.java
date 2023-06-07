@@ -16,8 +16,8 @@ public class Tester {
     EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory();
     EntityManager em = emf.createEntityManager();
 
-    User user = new User("user", "test", "gadevej", "12345678", "mail.com", "2000", "human");
-    User admin = new User("admin", "test", "vejgade", "23456789", "mail.com", "2001", "human");
+    User u1 = new User("user", "test", "gadevej", "12345678", "mail.com", "2000", "human");
+    User u2 = new User("admin", "test", "vejgade", "23456789", "mail.com", "2001", "human");
 
     Role userRole = new Role("user");
     Role adminRole = new Role("admin");
@@ -25,20 +25,20 @@ public class Tester {
     Guide g1 = new Guide("Hans", "Human", "12/12/1985", "Profile1", "Image");
     Guide g2 = new Guide("Ben", "Human", "12/12/1985", "Profile2", "Image");
 
-    Trip t1 = new Trip("Around Copenhagen", "06/06/2020", "12:00", "Rådhuspladsen", "4 hours", "PackingList");
-    Trip t2 = new Trip("Around Aarhus", "06/06/2020", "13:00", "Rådhuspladsen", "5 hours", "PackingList");
+    Trip t1 = new Trip("Around Copenhagen", "06/06/2020", "12:00", "Rådhuspladsen", "4 hours", "PackingList", g1.getId());
+    Trip t2 = new Trip("Around Aarhus", "06/06/2020", "13:00", "Rådhuspladsen", "5 hours", "PackingList", g2.getId());
 
     em.getTransaction().begin();
-    user.addRole(userRole);
-    admin.addRole(adminRole);
+    u1.addRole(userRole);
+    u2.addRole(adminRole);
 
-    t1.addUsers(user);
-    t1.addGuide(g1);
-    t2.addUsers(admin);
-    t2.addGuide(g2);
+//    t1.addUser(u1);
+//    t1.addGuide(g1.getId());
+//    t2.addUser(u2);
+//    t2.addGuide(g2.getId());
 
-    em.persist(user);
-    em.persist(admin);
+    em.persist(u1);
+    em.persist(u2);
     em.persist(userRole);
     em.persist(adminRole);
     em.persist(g1);
@@ -47,6 +47,15 @@ public class Tester {
     em.persist(t2);
 
     em.getTransaction().commit();
+
+
+    System.out.println(u1);
+    System.out.println(u2);
+    System.out.println(t1);
+    System.out.println(t2);
+    System.out.println(g1);
+    System.out.println(g2);
+    em.close();
 
 
 

@@ -9,7 +9,7 @@ import java.util.List;
 public class Trip {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "trip_id", nullable = false)
+    @Column(name = "id", nullable = false)
     private Long id;
     private String name;
     //    @Temporal(TemporalType.DATE)
@@ -22,36 +22,45 @@ public class Trip {
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Guide guide;
-    private Long guideId = guide.getId();
+    private Long guideId;
 
-    @JoinTable(name = "trip_user", joinColumns = {
-            @JoinColumn(name = "trip_id", referencedColumnName = "id")}, inverseJoinColumns = {
-            @JoinColumn(name = "user_name", referencedColumnName = "user_name"),
-            @JoinColumn(name = "guide_id", referencedColumnName = "GUIDE_id")})
+//    @JoinTable(name = "trip_user", joinColumns = {
+//            @JoinColumn(name = "trip_id", referencedColumnName = "id"),
+//            @JoinColumn(name = "guide_id", referencedColumnName = "guide_id")}, inverseJoinColumns = {
+//            @JoinColumn(name = "user_name", referencedColumnName = "user_name")})
 
-    @ManyToMany
-    private List<User> userList = new ArrayList<>();
+    @ManyToMany(mappedBy = "trips", cascade = CascadeType.PERSIST)
+    private List<User> users;
+
+//    public void addUser(User user) {
+//        if (user != null) {
+//            this.users.add(user);
+//            user.addTrip(this);
+//        }
+//    }
 
     public List<String> usersOnTrip() {
-        if(userList.isEmpty()) {
+        if (users.isEmpty()) {
             return null;
         }
         List<String> usersByName = new ArrayList<>();
-        userList.forEach((user) -> {
+        users.forEach((user) -> {
             usersByName.add(user.getUserName());
         });
         return usersByName;
     }
+
     public Trip() {
     }
 
-    public Trip(String name, String date, String time, String location, String duration, String packinglist) {
+    public Trip(String name, String date, String time, String location, String duration, String packinglist, Long guideId) {
         this.name = name;
         this.date = date;
         this.time = time;
         this.location = location;
         this.duration = duration;
         this.packinglist = packinglist;
+        this.guideId = guideId;
     }
 
     public Long getId() {
@@ -107,18 +116,30 @@ public class Trip {
         return guide;
     }
     public void addGuide(Long guideid) {
-        this.guide.getId();
+        this.guideId = guideid;
     }
 
     public List<User> getUsers() {
-        return userList;
+        return users;
     }
-    public void setUserList(List<User> userList) {
-        this.userList = userList;
+    public void setUserList(List<User> users) {
+        this.users = users;
     }
     public void addUser(User user) {
-        this.userList.add(user);
+        users.add(user);
     }
 
-
+    @Override
+    public String toString() {
+        return "Trip{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", date='" + date + '\'' +
+                ", time='" + time + '\'' +
+                ", location='" + location + '\'' +
+                ", duration='" + duration + '\'' +
+                ", packinglist='" + packinglist + '\'' +
+                ", guideId=" + guideId +
+                '}';
+    }
 }

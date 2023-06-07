@@ -39,7 +39,6 @@ public class Guide implements Serializable {
     public Long getId() {
         return id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -47,7 +46,6 @@ public class Guide implements Serializable {
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
@@ -55,7 +53,6 @@ public class Guide implements Serializable {
     public String getGender() {
         return gender;
     }
-
     public void setGender(String gender) {
         this.gender = gender;
     }
@@ -63,7 +60,6 @@ public class Guide implements Serializable {
     public String getBirthyear() {
         return birthyear;
     }
-
     public void setBirthyear(String birthyear) {
         this.birthyear = birthyear;
     }
@@ -71,7 +67,6 @@ public class Guide implements Serializable {
     public String getProfile() {
         return profile;
     }
-
     public void setProfile(String profile) {
         this.profile = profile;
     }
@@ -79,7 +74,6 @@ public class Guide implements Serializable {
     public String getImageUrl() {
         return imageUrl;
     }
-
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
@@ -87,12 +81,19 @@ public class Guide implements Serializable {
     public List<Trip> getTrips() {
         return trips;
     }
-
     public void addTrip(Trip trip) {
         this.trips.add(trip);
     }
 
-
-
-
+    @Override
+    public String toString() {
+        return "Guide{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", gender='" + gender + '\'' +
+                ", birthyear='" + birthyear + '\'' +
+                ", profile='" + profile + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
+                '}';
+    }
 }
