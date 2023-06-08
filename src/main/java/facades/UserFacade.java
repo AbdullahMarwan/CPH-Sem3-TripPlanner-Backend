@@ -1,5 +1,6 @@
 package facades;
 
+import dtos.UserDto;
 import entities.Role;
 import entities.User;
 import javax.persistence.EntityManager;
@@ -30,7 +31,7 @@ public class UserFacade {
         return instance;
     }
 
-    public User getVerifiedUser(String username, String password) throws AuthenticationException {
+    public UserDto getVerifiedUser(String username, String password) throws AuthenticationException {
         EntityManager em = emf.createEntityManager();
         User user;
         try {
@@ -41,10 +42,10 @@ public class UserFacade {
         } finally {
             em.close();
         }
-        return user;
+        return new UserDto(user);
     }
 
-    public User createUser(User user) {
+    public UserDto createUser(User user) {
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
@@ -53,10 +54,10 @@ public class UserFacade {
         } finally {
             em.close();
         }
-        return user;
+        return new UserDto(user);
     }
 
-    public User addUser(String username, String password, String address, String phone, String email, String birthyear, String gender) {
+    public UserDto addUser(String username, String password, String address, String phone, String email, String birthyear, String gender) {
         EntityManager em = emf.createEntityManager();
         User user = new User(username, password, address, phone, email, birthyear, gender);
         Role role = new Role("user");
@@ -66,10 +67,10 @@ public class UserFacade {
         em.getTransaction().commit();
         em.close();
 
-        return user;
+        return new UserDto(user);
     }
 
-    public User deleteUser(String username) {
+    public UserDto deleteUser(String username) {
         EntityManager em = emf.createEntityManager();
         User user = em.find(User.class, username);
 
@@ -77,14 +78,14 @@ public class UserFacade {
         em.remove(user);
         em.getTransaction().commit();
         em.close();
-        return user;
+        return new UserDto(user);
     }
 
-    public User getUser(String username) {
+    public UserDto getUserById(Long id) {
         EntityManager em = emf.createEntityManager();
-        User user = em.find(User.class, username);
+        User user = em.find(User.class, id);
         em.close();
-        return user;
+        return new UserDto(user);
     }
 
 }
