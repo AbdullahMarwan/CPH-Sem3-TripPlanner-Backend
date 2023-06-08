@@ -26,9 +26,9 @@
             <property name="eclipselink.logging.parameters" value="true"/>
             
             <!-- In PRODUCTION the values below, will be overriden by utils.EMF_Creator -->
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://134.122.76.165:3306/trip_planner?serverTimezone=UTC"/>
-            <property name="javax.persistence.jdbc.user" value="Chris_Dev"/>
-            <property name="javax.persistence.jdbc.password" value="Ysr512346mqr"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://104.248.27.220:3306/trip_planner?serverTimezone=UTC"/>
+            <property name="javax.persistence.jdbc.user" value="devnikolaj"/>
+            <property name="javax.persistence.jdbc.password" value="dev1"/>
             
         </properties>
     </persistence-unit>

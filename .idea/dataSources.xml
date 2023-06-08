@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:mysql://134.122.76.165:3306/trip_planner</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="trip_planner@104.248.27.220" uuid="17d258e6-bd85-4a49-af2f-3f0c9905c9b1">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://104.248.27.220:3306/trip_planner</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
