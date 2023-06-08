@@ -9,10 +9,13 @@
         <module name="dat3_ca2" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="dat3_trip_planner" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="dat3_ca2" options="-endorseddirs C:\Users\chris\IdeaProjects\CPH-Sem3-TripPlanner-Backend\target/endorsed" />
+      <module name="dat3_ca2" options="-endorseddirs $PROJECT_DIR$/target/endorsed" />
     </option>
   </component>
 </project>
