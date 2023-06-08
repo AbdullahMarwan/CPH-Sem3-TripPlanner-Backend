@@ -2,6 +2,7 @@ package entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,7 +19,6 @@ public class Guide implements Serializable {
     private String birthyear;
     private String profile;
     private String imageUrl;
-
     @OneToMany(mappedBy = "guide", cascade = CascadeType.PERSIST)
     private List<Trip> trips;
 
@@ -33,7 +33,7 @@ public class Guide implements Serializable {
         this.imageUrl = imageUrl;
         //TODO: Add Date object
         // this.date = new Date()
-
+        this.trips = new ArrayList<>();
     }
 
     public Long getId() {
@@ -81,8 +81,12 @@ public class Guide implements Serializable {
     public List<Trip> getTrips() {
         return trips;
     }
+    public void setTrips(List<Trip> trips) {
+        this.trips = trips;
+    }
     public void addTrip(Trip trip) {
         this.trips.add(trip);
+        trip.setGuide(this);
     }
 
     @Override

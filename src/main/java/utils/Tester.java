@@ -1,9 +1,6 @@
 package utils;
 
-import entities.Guide;
-import entities.Role;
-import entities.Trip;
-import entities.User;
+import entities.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -13,7 +10,7 @@ public class Tester {
 
   public static void main(String[] args) {
 
-    EntityManagerFactory emf = EMF_Creator.createEntityManagerFactory();
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("pu");
     EntityManager em = emf.createEntityManager();
 
     User u1 = new User("user", "test", "gadevej", "12345678", "mail.com", "2000", "human");
@@ -25,17 +22,18 @@ public class Tester {
     Guide g1 = new Guide("Hans", "Human", "12/12/1985", "Profile1", "Image");
     Guide g2 = new Guide("Ben", "Human", "12/12/1985", "Profile2", "Image");
 
-    Trip t1 = new Trip("Around Copenhagen", "06/06/2020", "12:00", "Rådhuspladsen", "4 hours", "PackingList", g1.getId());
-    Trip t2 = new Trip("Around Aarhus", "06/06/2020", "13:00", "Rådhuspladsen", "5 hours", "PackingList", g2.getId());
+    Trip t1 = new Trip("Around Copenhagen", "06/06/2020", "12:00", "Rådhuspladsen", "4 hours", "PackingList");
+    Trip t2 = new Trip("Around Aarhus", "06/06/2020", "13:00", "Rådhuspladsen", "5 hours", "PackingList");
 
-    em.getTransaction().begin();
     u1.addRole(userRole);
     u2.addRole(adminRole);
 
-//    t1.addUser(u1);
-//    t1.addGuide(g1.getId());
-//    t2.addUser(u2);
-//    t2.addGuide(g2.getId());
+    em.getTransaction().begin();
+
+    t1.addUser(u1);
+    t1.addGuide(g1);
+    t2.addUser(u2);
+    t2.addGuide(g2);
 
     em.persist(u1);
     em.persist(u2);
@@ -48,13 +46,17 @@ public class Tester {
 
     em.getTransaction().commit();
 
-
+    System.out.println("");
     System.out.println(u1);
     System.out.println(u2);
+    System.out.println("");
     System.out.println(t1);
     System.out.println(t2);
+    System.out.println("");
     System.out.println(g1);
     System.out.println(g2);
+    System.out.println("");
+
     em.close();
 
 

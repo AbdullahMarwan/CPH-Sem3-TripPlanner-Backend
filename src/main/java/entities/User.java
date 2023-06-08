@@ -34,13 +34,17 @@ public class User implements Serializable {
     private String gender;
 
     @JoinTable(name = "user_roles", joinColumns = {
-            @JoinColumn(name = "user_name", referencedColumnName = "user_name")}, inverseJoinColumns = {
-            @JoinColumn(name = "role_name", referencedColumnName = "role_name")})
+            @JoinColumn(name = "userid", referencedColumnName = "id")}, inverseJoinColumns = {
+            @JoinColumn(name = "roleid", referencedColumnName = "id")})
 
     @ManyToMany
     private List<Role> roleList = new ArrayList<>();
 
     @ManyToMany
+    @JoinTable(name = "user_trips", joinColumns = {
+            @JoinColumn(name = "user_id", referencedColumnName = "id")}, inverseJoinColumns = {
+            @JoinColumn(name = "trip_id", referencedColumnName = "id"),
+            @JoinColumn(name = "guide_id", referencedColumnName = "guide_id")})
     private List<Trip> trips;
 
     public List<String> getRolesAsStrings() {
@@ -159,13 +163,14 @@ public class User implements Serializable {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                "userName='" + userName + '\'' +
+                ", userName='" + userName + '\'' +
                 ", userPass='" + userPass + '\'' +
                 ", address='" + address + '\'' +
                 ", phone='" + phone + '\'' +
                 ", email='" + email + '\'' +
                 ", birthyear='" + birthyear + '\'' +
                 ", gender='" + gender + '\'' +
+                ", roleList=" + roleList +
                 '}';
     }
 

@@ -3,6 +3,7 @@ package entities;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "trip")
@@ -19,25 +20,14 @@ public class Trip {
     private String location;
     private String duration;
     private String packinglist;
-
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
+    @JoinColumn(name = "guide_id", referencedColumnName = "id")
     private Guide guide;
-    private Long guideId;
 
-//    @JoinTable(name = "trip_user", joinColumns = {
-//            @JoinColumn(name = "trip_id", referencedColumnName = "id"),
-//            @JoinColumn(name = "guide_id", referencedColumnName = "guide_id")}, inverseJoinColumns = {
-//            @JoinColumn(name = "user_name", referencedColumnName = "user_name")})
 
-    @ManyToMany(mappedBy = "trips", cascade = CascadeType.PERSIST)
+    @ManyToMany(mappedBy = "trips")
     private List<User> users;
 
-//    public void addUser(User user) {
-//        if (user != null) {
-//            this.users.add(user);
-//            user.addTrip(this);
-//        }
-//    }
 
     public List<String> usersOnTrip() {
         if (users.isEmpty()) {
@@ -53,14 +43,14 @@ public class Trip {
     public Trip() {
     }
 
-    public Trip(String name, String date, String time, String location, String duration, String packinglist, Long guideId) {
+    public Trip(String name, String date, String time, String location, String duration, String packinglist) {
         this.name = name;
         this.date = date;
         this.time = time;
         this.location = location;
         this.duration = duration;
         this.packinglist = packinglist;
-        this.guideId = guideId;
+        this.users = new ArrayList<>();
     }
 
     public Long getId() {
@@ -112,21 +102,30 @@ public class Trip {
         this.packinglist = packinglist;
     }
 
-    public Guide getGuide() {
-        return guide;
-    }
-    public void addGuide(Long guideid) {
-        this.guideId = guideid;
-    }
-
     public List<User> getUsers() {
         return users;
     }
-    public void setUserList(List<User> users) {
+    public void setUsers(List<User> users) {
         this.users = users;
     }
     public void addUser(User user) {
-        users.add(user);
+        this.users.add(user);
+        if(!user.getTrips().contains(this)) {
+            user.addTrip(this);
+        }
+    }
+
+    public Guide getGuide() {
+        return guide;
+    }
+    public void setGuide(Guide guide) {
+        this.guide = guide;
+    }
+    public void addGuide(Guide guide) {
+        this.guide = guide;
+        if(!guide.getTrips().contains(this)) {
+            guide.addTrip(this);
+        }
     }
 
     @Override
@@ -139,7 +138,9 @@ public class Trip {
                 ", location='" + location + '\'' +
                 ", duration='" + duration + '\'' +
                 ", packinglist='" + packinglist + '\'' +
-                ", guideId=" + guideId +
                 '}';
     }
+
+
+
 }
